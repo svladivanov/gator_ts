@@ -2,8 +2,9 @@ import {
   createUser,
   deleteAllUsers,
   getUserByName,
+  getUsers,
 } from 'src/lib/db/queries/users'
-import { setUser } from '../config'
+import { readConfig, setUser } from '../config'
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
   if (args.length !== 1) {
@@ -37,15 +38,18 @@ export async function handlerRegister(cmdName: string, ...args: string[]) {
   }
 }
 
-export async function handlerReset(cmdName: string) {
+export async function handlerListUsers(_: string) {
   try {
-    console.log(`Running ${cmdName} on "users" table`)
-    await deleteAllUsers()
-    console.log(`All users in table "users" has been deleted`)
-    process.exit(0)
+    const users = await getUsers()
+    const currentUser = readConfig().currentUserName
+    for (const user of users) {
+      if (user.name === currentUser) {
+        console.log(`* ${user.name} (current)`)
+        continue
+      }
+      console.log(`* ${user.name}`)
+    }
   } catch (err) {
-    throw new Error(
-      `Error deleting all users in "users" table: ${(err as Error).message}`
-    )
+    throw new Error(`Error getting all users: ${(err as Error).message}`)
   }
 }
