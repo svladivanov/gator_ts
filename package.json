@@ -1,0 +1,33 @@
+{
+  "name": "gator_ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "prettier": {
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 80,
+    "trailingComma": "es5"
+  },
+  "scripts": {
+    "start": "tsx ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svladivanov/gator_ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svladivanov/gator_ts/issues"
+  },
+  "homepage": "https://github.com/svladivanov/gator_ts#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
