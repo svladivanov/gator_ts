@@ -13,3 +13,7 @@ export async function getUserByName(name: string) {
 
   return firstOrUndefined(result)
 }
+
+export async function deleteAllUsers() {
+  await db.delete(users)
+}
