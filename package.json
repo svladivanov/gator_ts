@@ -12,8 +12,8 @@
   },
   "scripts": {
     "start": "tsx ./src/index.ts",
-    "generate": "drizzle-kit generate --config=drizzle.config.ts",
-    "migrate": "drizzle-kit migrate --config=drizzle.config.ts"
+    "generate": "npx drizzle-kit generate --config=drizzle.config.ts",
+    "migrate": "npx drizzle-kit migrate --config=drizzle.config.ts"
   },
   "repository": {
     "type": "git",

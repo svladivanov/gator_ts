@@ -1,12 +1,34 @@
+import { createUser, getUserByName } from 'src/lib/db/queries/users'
 import { setUser } from '../config'
 
-export function handlerLogin(cmdName: string, ...args: string[]) {
+export async function handlerLogin(cmdName: string, ...args: string[]) {
   if (args.length !== 1) {
-    console.error(`Usage: ${cmdName} <username>`)
-    process.exit(1)
+    throw new Error(`Usage: ${cmdName} <username>`)
   }
 
   const userName = args[0]
-  setUser(userName)
-  console.log(`User switched to ${userName} successfully`)
+  const existingUser = await getUserByName(userName)
+  if (!existingUser) {
+    throw new Error(`Error: user ${userName} not found`)
+  }
+
+  setUser(existingUser.name)
+  console.log(`User switched to ${existingUser.name} successfully`)
+}
+
+export async function handlerRegister(cmdName: string, ...args: string[]) {
+  if (args.length !== 1) {
+    throw new Error(`Usage: ${cmdName} <username>`)
+  }
+
+  try {
+    const userName = args[0]
+    const user = await createUser(userName)
+
+    setUser(userName)
+    console.log(`User ${userName} was created:`)
+    console.log(`${JSON.stringify(user, null, 2)}`)
+  } catch (e) {
+    throw new Error(`Error creating user: ${(e as Error).message}`)
+  }
 }
