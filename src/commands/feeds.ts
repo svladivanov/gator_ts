@@ -1,6 +1,6 @@
 import { readConfig } from 'src/config'
-import { createFeed } from 'src/lib/db/queries/feeds'
-import { getUserByName } from 'src/lib/db/queries/users'
+import { createFeed, getFeeds } from 'src/lib/db/queries/feeds'
+import { getUserByID, getUserByName } from 'src/lib/db/queries/users'
 import { Feed, User } from 'src/lib/db/schema'
 
 export async function handlerAddFeed(
@@ -28,6 +28,22 @@ export async function handlerAddFeed(
     printFeed(feed, user)
   } catch (err) {
     throw new Error(`Error getting current user: ${(err as Error).message}`)
+  }
+}
+
+export async function handlerListFeeds(_: string): Promise<void> {
+  try {
+    const feeds = await getFeeds()
+    for (const feed of feeds) {
+      const user = await getUserByID(feed.userId)
+      if (!user) {
+        throw new Error('User not found')
+      }
+      printFeed(feed, user)
+      console.log('=====================================')
+    }
+  } catch (err) {
+    throw new Error(`Error: failed to list feeds: ${(err as Error).message}`)
   }
 }
 

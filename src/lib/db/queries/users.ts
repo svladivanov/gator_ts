@@ -14,6 +14,12 @@ export async function getUserByName(name: string) {
   return firstOrUndefined(result)
 }
 
+export async function getUserByID(id: string) {
+  const result = await db.select().from(users).where(eq(users.id, id))
+
+  return firstOrUndefined(result)
+}
+
 export async function getUsers() {
   return await db.select().from(users)
 }

@@ -14,3 +14,7 @@ export async function createFeed(
 
   return firstOrUndefined(result)
 }
+
+export async function getFeeds() {
+  return await db.select().from(feeds)
+}
