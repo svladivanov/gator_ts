@@ -1,9 +1,4 @@
-import {
-  createUser,
-  deleteAllUsers,
-  getUserByName,
-  getUsers,
-} from 'src/lib/db/queries/users'
+import { createUser, getUserByName, getUsers } from 'src/lib/db/queries/users'
 import { readConfig, setUser } from '../config'
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
