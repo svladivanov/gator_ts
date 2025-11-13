@@ -1,11 +1,11 @@
-import { readConfig } from 'src/config'
 import { createFeedFollow } from 'src/lib/db/queries/feedFollows'
 import { createFeed, getFeeds } from 'src/lib/db/queries/feeds'
-import { getUserByID, getUserByName } from 'src/lib/db/queries/users'
+import { getUserByID } from 'src/lib/db/queries/users'
 import { Feed, User } from 'src/lib/db/schema'
 
 export async function handlerAddFeed(
   cmdName: string,
+  user: User,
   ...args: string[]
 ): Promise<void> {
   if (args.length !== 2) {
@@ -13,11 +13,6 @@ export async function handlerAddFeed(
   }
 
   try {
-    const user = await getUserByName(readConfig().currentUserName)
-    if (!user) {
-      throw new Error(`User ${user} not found`)
-    }
-
     const feedName = args[0]
     const feedURL = args[1]
     const feed = await createFeed(feedName, feedURL, user.id)
