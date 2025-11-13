@@ -8,6 +8,20 @@
       "when": 1762955882231,
       "tag": "0000_pale_logan",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1763029536537,
+      "tag": "0001_narrow_zarek",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1763035096493,
+      "tag": "0002_black_lilandra",
+      "breakpoints": true
     }
   ]
 }
