@@ -1,4 +1,5 @@
 import { readConfig } from 'src/config'
+import { createFeedFollow } from 'src/lib/db/queries/feedFollows'
 import { createFeed, getFeeds } from 'src/lib/db/queries/feeds'
 import { getUserByID, getUserByName } from 'src/lib/db/queries/users'
 import { Feed, User } from 'src/lib/db/schema'
@@ -24,8 +25,14 @@ export async function handlerAddFeed(
       throw new Error('Failed to create feed')
     }
 
-    console.log('Feed created successfully:')
-    printFeed(feed, user)
+    console.log(`Feed ${feed.name} created successfully for ${user.name}`)
+
+    const feedFollow = await createFeedFollow(user.id, feed.id)
+    if (!feedFollow) {
+      throw new Error('Failed to follow feed')
+    }
+
+    console.log(`Feed ${feed.name} followed successfully for ${user.name}`)
   } catch (err) {
     throw new Error(`Error getting current user: ${(err as Error).message}`)
   }
