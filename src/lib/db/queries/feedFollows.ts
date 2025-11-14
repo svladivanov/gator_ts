@@ -47,3 +47,9 @@ export async function getFeedFollowsForUser(userID: string) {
     .innerJoin(users, eq(feedFollows.userId, users.id))
     .where(eq(feedFollows.userId, userID))
 }
+
+export async function deleteFeedFollow(userID: string, feedID: string) {
+  await db
+    .delete(feedFollows)
+    .where(and(eq(feedFollows.userId, userID), eq(feedFollows.feedId, feedID)))
+}

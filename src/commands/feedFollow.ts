@@ -1,5 +1,6 @@
 import {
   createFeedFollow,
+  deleteFeedFollow,
   getFeedFollowsForUser,
 } from 'src/lib/db/queries/feedFollows'
 import { getFeedByURL } from 'src/lib/db/queries/feeds'
@@ -43,5 +44,29 @@ export async function handlerFollowing(_: string, user: User) {
     }
   } catch (err) {
     throw new Error(`error getting feed follows: ${(err as Error).message}`)
+  }
+}
+
+export async function handlerUnfollow(
+  cmdName: string,
+  user: User,
+  ...args: string[]
+) {
+  if (args.length !== 1) {
+    throw new Error(`Usage: ${cmdName} <feed_url>`)
+  }
+
+  const feedURL = args[0]
+  try {
+    const feed = await getFeedByURL(feedURL)
+    if (!feed) {
+      throw new Error('error getting feed')
+    }
+
+    await deleteFeedFollow(user.id, feed.id)
+
+    console.log(`Feed "${feed.name}" successfully unfollowed`)
+  } catch (err) {
+    throw new Error(`error unfollowing feed: ${(err as Error).message}`)
   }
 }
