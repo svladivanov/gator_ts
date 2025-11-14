@@ -36,6 +36,13 @@
       "when": 1763111603409,
       "tag": "0004_hard_rictor",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1763113991565,
+      "tag": "0005_lying_mole_man",
+      "breakpoints": true
     }
   ]
 }
